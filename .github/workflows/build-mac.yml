@@ -34,12 +34,14 @@ jobs:
         path: |
           build/tools/cjxl
           build/tools/djxl
+    - name: Zip
+      if: startsWith(github.ref, 'refs/tags/')
+      run: cd build/tools && zip jpeg-xl-macos-x64-static.zip cjxl djxl
+
     - name: Release
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
       with:
-          files: |
-            build/tools/cjxl
-            build/tools/djxl
+          files: build/tools/jpeg-xl-macos-x64-static.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
