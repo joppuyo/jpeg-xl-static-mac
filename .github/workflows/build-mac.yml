@@ -1,0 +1,35 @@
+name: Build (Mac)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: macos-10.15
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+    - name: Install dependencies
+      run: brew install llvm coreutils cmake giflib jpeg-turbo libpng ninja zlib doxygen
+    - name: Install more dependencies
+      run: ./deps.sh
+    - name: Build
+      run: export PATH=/usr/local/opt/llvm/bin:$PATH &&
+           export CMAKE_PREFIX_PATH=`brew --prefix giflib`:`brew --prefix jpeg-turbo`:`brew --prefix libpng`:`brew --prefix zlib` &&
+           ./ci.sh release -DJPEGXL_DEP_LICENSE_DIR=/usr/share/doc -DJPEGXL_STATIC=ON -DJPEGXL_ENABLE_VIEWERS=OFF -DJPEGXL_ENABLE_PLUGINS=OFF -DJPEGXL_ENABLE_OPENEXR=OFF
+    - name: Install more dependencies
+      run: shasum -a 256 build/tools/cjxl &&
+           shasum -a 256 build/tools/djxl
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: mac
+        path: |
+          build/tools/cjxl
+          build/tools/cjxl
