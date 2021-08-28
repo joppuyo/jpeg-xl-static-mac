@@ -151,7 +151,7 @@ if(JPEGXL_STATIC)
   set(CMAKE_FIND_LIBRARY_SUFFIXES .a)
   set(BUILD_SHARED_LIBS 0)
   set(CMAKE_EXE_LINKER_FLAGS
-      "${CMAKE_EXE_LINKER_FLAGS} -static -static-libgcc -static-libstdc++")
+      "${CMAKE_EXE_LINKER_FLAGS}")
   if (MINGW)
     # In MINGW libstdc++ uses pthreads directly. When building statically a
     # program (regardless of whether the source code uses pthread or not) the
