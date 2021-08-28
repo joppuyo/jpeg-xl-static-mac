@@ -37,6 +37,8 @@ target_link_libraries(jxl_extras-static PUBLIC
   lodepng
 )
 
+set(CMAKE_FIND_FRAMEWORK LAST)
+
 find_package(GIF 5)
 if(GIF_FOUND)
   target_sources(jxl_extras-static PRIVATE
