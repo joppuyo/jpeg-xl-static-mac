@@ -38,3 +38,12 @@ jobs:
         path: |
           build/tools/cjxl
           build/tools/djxl
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+          files: |
+            build/tools/cjxl
+            build/tools/djxl
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
