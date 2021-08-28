@@ -37,7 +37,6 @@ jobs:
     - name: Zip
       if: startsWith(github.ref, 'refs/tags/')
       run: cd build/tools && zip jpeg-xl-macos-x64-static.zip cjxl djxl
-
     - name: Release
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
